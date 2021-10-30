@@ -1,0 +1,2 @@
+# CM-2Norm_matrix_problem.
+Final project for the course "Computational Mathematics for Learning and Data Analysis"  at university of Pisa for the A.Y 2020/2021. In this project we explore the problem of estimating the matrix 2-norm as an uncostrained optimization problem. We used methods "Conjugate Gradient Descent", "Quasi-Newton Method(BFGS)" and "Arnoldi process". All the theoretical analysis of these methods is included in the report.
