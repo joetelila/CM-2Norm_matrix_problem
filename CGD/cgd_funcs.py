@@ -27,16 +27,6 @@ class Funcs:
       '''
       return ((2 * x * np.matmul(x.T, np.matmul(self.M, x))) / (np.matmul(x.T, x))**2) - (2 * np.matmul(self.M, x)) / np.matmul(x.T, x)
   
-  def Griewank(self,xs):
-    """Griewank Function"""
-    d = len(xs)
-    sqrts = np.array([np.sqrt(i + 1) for i in range(d)])
-    cos_terms = np.cos(xs / sqrts)
-    
-    sigma = np.dot(xs, xs) / 4000
-    pi = np.prod(cos_terms)
-    return 1 + sigma - pi
-  
 
   def exact_line_search(self, d,x):
         '''

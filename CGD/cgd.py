@@ -65,7 +65,6 @@ class CGD:
         num_iter = 0
         curve_x= [x]
         curve_fx = [fx]
-        errors = []
         if(self.verboose):
             print('Initial condition: fx = {:.4f}, x = {} \n'.format(fx, x))
 
