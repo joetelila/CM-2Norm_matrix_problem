@@ -12,11 +12,7 @@
 
 # Imports
 import numpy as np
-import pandas as pd
-from plotly.subplots import make_subplots
-import plotly.graph_objects as go
 
-from cgd_funcs import Funcs
 
 class CGD:
 
@@ -114,38 +110,6 @@ class CGD:
 
         return residuals,errors
 
-# Main function
-def main():
-    # Generate the matrix A.
-    np.random.seed(0)
-    A = np.random.randn(10000, 100)
-    x0 = np.random.randn(100)
-    funcs = Funcs(A)
-    # Initialize the CGD algorithm.
-    cgd = CGD(funcs.func_,funcs.func_grad_,funcs.exact_line_search,x0, 1e-4, 1000, method='FR', verboose=False)
-
-    # Run the algorithm.
-    residual, errors = cgd.cgd()
-    fig = make_subplots(rows=1, cols=2,
-      shared_xaxes=False)
-
-    fig.add_trace(
-        go.Scatter(x=list(range(0,len(errors))), y=errors,name="Errors"),
-        row=1, col=1
-    )
-
-    fig.add_trace(
-        go.Scatter(x=list(range(0,len(residual))), y=residual,name="Residuals"),
-        row=1, col=2
-    )
-    fig.update_xaxes(title_text="Iterations", row=1, col=1)
-    fig.update_yaxes(title_text="Error", row=1, col=1)
-    fig.update_xaxes(title_text="Iterations", row=1, col=2)
-    fig.update_yaxes(title_text="Residual", row=1, col=2)
-    fig.update_layout(title_text="Residual and Error plot")
-    fig.show()
-
-main()
 
 
 
