@@ -54,11 +54,11 @@ class Funcs:
 
         
 
-        a = dTMx_ * dTd_
-        b = (xTMx_ * dTd_) - (dTMd_ * xTx_)
-        c = (xTMx_ * xTd_) - (dTMx_ * xTx_)
+        a = (dTMx_ * dTd_)
+        b = -((xTMx_ * dTd_) - (dTMd_ * xTx_))
+        c = ((xTMx_ * xTd_) - (dTMx_ * xTx_))
 
-        coef = np.array([a, -b, c])
+        coef = np.array([a, b, c])
         roots = np.roots(coef).tolist()
 
         if(roots[0].real < 0 and roots[1].real < 0):

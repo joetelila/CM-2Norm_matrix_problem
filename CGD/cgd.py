@@ -12,9 +12,12 @@
 
 # Imports
 import numpy as np
-import matplotlib.pyplot as plt
+import pandas as pd
+from plotly.subplots import make_subplots
+import plotly.graph_objects as go
+
 from cgd_funcs import Funcs
-from plots import plot
+
 class CGD:
 
     # Initialize the CGD algorithm
@@ -63,8 +66,9 @@ class CGD:
 
         # Collect the results.
         num_iter = 0
-        curve_x= [x]
-        curve_fx = [fx]
+        residuals = []
+        errors = []
+
         if(self.verboose):
             print('Initial condition: fx = {:.4f}, x = {} \n'.format(fx, x))
 
@@ -77,8 +81,13 @@ class CGD:
             
             # update iterates.
             x_new = x + alpha * p
-           
+            fx_new = self.func_(x_new)
+            
+        
             gf_new = self.func_grad_(x_new)
+             
+            # calculate error.
+            error = fx_new - fx
 
             # calculate beta.
             if self.method == 'FR':
@@ -88,40 +97,53 @@ class CGD:
             
             # update everything.
             x = x_new
+            fx = fx_new
             gfx = gf_new
             p = -gfx + beta * p
             gfx_norm = np.linalg.norm(gfx)
 
             # collect the results.
             num_iter += 1
-            curve_x.append(x)
-            curve_fx.append(fx)
-    
+            residuals.append(gfx_norm)
+            errors.append(error)
             if(self.verboose):
                 print('Iteration {}: alpha = {:.4f}, residual = {}\n'.format(num_iter, alpha, gfx_norm))
             
         if num_iter == self.max_iter:
             print('CGD did not converge')
 
-        return np.array(curve_x), np.array(curve_fx)
+        return residuals,errors
 
 # Main function
 def main():
     # Generate the matrix A.
     np.random.seed(0)
-    A = np.random.randn(1000, 10)
-    x0 = np.random.randn(10)
+    A = np.random.randn(10000, 100)
+    x0 = np.random.randn(100)
     funcs = Funcs(A)
     # Initialize the CGD algorithm.
-    cgd = CGD(funcs.func_,funcs.func_grad_,funcs.exact_line_search,x0, 1e-4, 1000, method='FR', verboose=True)
+    cgd = CGD(funcs.func_,funcs.func_grad_,funcs.exact_line_search,x0, 1e-4, 1000, method='FR', verboose=False)
 
     # Run the algorithm.
-    x_ , fx_ = cgd.cgd()
+    residual, errors = cgd.cgd()
+    fig = make_subplots(rows=1, cols=2,
+      shared_xaxes=False)
 
-    #plotting results.
-    #plots = plot(funcs.func_)
-    #X, Y, Z = plots.create_mesh()
+    fig.add_trace(
+        go.Scatter(x=list(range(0,len(errors))), y=errors,name="Errors"),
+        row=1, col=1
+    )
 
+    fig.add_trace(
+        go.Scatter(x=list(range(0,len(residual))), y=residual,name="Residuals"),
+        row=1, col=2
+    )
+    fig.update_xaxes(title_text="Iterations", row=1, col=1)
+    fig.update_yaxes(title_text="Error", row=1, col=1)
+    fig.update_xaxes(title_text="Iterations", row=1, col=2)
+    fig.update_yaxes(title_text="Residual", row=1, col=2)
+    fig.update_layout(title_text="Residual and Error plot")
+    fig.show()
 
 main()
 
