@@ -65,8 +65,8 @@ class CGD:
         residuals = []
         errors = []
 
-        if(self.verboose):
-            print('Initial condition: fx = {:.4f}, x = {} \n'.format(fx, x))
+        #if(self.verboose):
+        #    print('Initial condition: fx = {:.4f}, x = {} \n'.format(fx, x))
 
         # Start the algorithm iterations.
         while gfx_norm > self.tol and num_iter < self.max_iter:
@@ -83,7 +83,7 @@ class CGD:
             gf_new = self.func_grad_(x_new)
              
             # calculate error.
-            error = fx_new - fx
+            error = abs(fx_new - fx)
 
             # calculate beta.
             if self.method == 'FR':
@@ -103,12 +103,12 @@ class CGD:
             residuals.append(gfx_norm)
             errors.append(error)
             if(self.verboose):
-                print('Iteration {}: alpha = {:.4f}, residual = {}\n'.format(num_iter, alpha, gfx_norm))
+                print('Iteration {}: error = {:.4f}, residual = {}\n'.format(num_iter, error, gfx_norm))
             
         if num_iter == self.max_iter:
             print('CGD did not converge')
 
-        return residuals,errors
+        return residuals,errors, fx
 
 
 
