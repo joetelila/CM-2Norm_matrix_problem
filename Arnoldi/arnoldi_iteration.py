@@ -1,6 +1,6 @@
 import numpy as np
 
-import numpy as np
+QR_ALGORITHM_TOLERANCE = 1e-8 
 
 def arnoldi_iteration(A, b, n: int):
     """Computes an orthonormal basis Q for the Krylov space {b,Ab,A²b,...},
@@ -29,7 +29,56 @@ def arnoldi_iteration(A, b, n: int):
         H[i,i-1] = np.linalg.norm(v,2) 
         Q[:,i] = v / H[i,i-1] 
 
-    return Q, H  
+    return H  
+
+def func_(A):
+  """
+  Given a matrix A compute product  A A^T 
+
+    Arguments
+      H: m × n array
+    
+    Returns
+      prodcut_of_matrix: where prodcut_of_matrix = A A^T  
+  """
+  return np.dot(A, A.T)   
+
+
+def chope_lastrow(H):
+  """
+  Chope the last row of H: (n + 1) x n array,and return H:(n) x n a squre matrix 
+
+    Arguments
+      H: m × n array
+    
+    Returns
+      H: (n) x n array,
+  """
+  return np.delete(H, (len(H)-1), axis=0)  
+
+def QR_algorithm(H):
+    H = chope_lastrow(H)
+    n, m = H.shape
+    if m!= n:
+        raise np.linalg.LinAlgError("Array must be square.") 
+        
+    convergence_measure = []
+    λ = np.zeros((n, ), dtype='float') 
+    n -= 1
+    while n > 0:
+       
+        Q,R = np.linalg.qr(H)
+        H = np.dot(R, Q)
+
+        convergence_measure.append(np.abs(H[n, n - 1])) 
+        
+        if convergence_measure[-1] < QR_ALGORITHM_TOLERANCE:
+            λ[n] = H[n, n]
+            H = H[:n, :n]
+            n -= 1
+
+    λ[0] = H 
+    return λ
 
 
 
