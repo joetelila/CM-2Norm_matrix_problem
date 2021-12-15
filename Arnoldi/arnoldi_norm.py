@@ -17,7 +17,7 @@ from arnoldi_iteration import arnoldi_iteration,chope_lastrow,QR_algorithm ,func
 epsilon = 1e-8 
 
 class arnoldi_norm:
-     # Initialize the CGD algorithm
+     # Initialize the arnoldi algorithm
     def __init__(self, M,b,max_iter,verboose=False):  
         '''
         Parameters
