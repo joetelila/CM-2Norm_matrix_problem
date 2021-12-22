@@ -1,6 +1,13 @@
 import numpy as np
 from numpy import linalg as la
+from scipy import sparse
+import numpy as np
 '''
+Authors: Dawit Anelay
+         Marco Pitex
+         Yohannis Telila
+Credits:
+The code to generate the matrix with condition number is based on the code from
 Author: Bartolomeo Stellato
 Source: https://gist.github.com/bstellato/23322fe5d87bb71da922fbc41d658079
 
@@ -59,3 +66,12 @@ x0_m4 = np.round(np.random.randn(100),decimals = 3)
 np.savetxt("x0_m4.txt", x0_m4)
 print("[success] x0_m4 generated and saved.")
 
+# Generate M5 matrix
+M5 = sparse.random(1000, 100, density=0.3, data_rvs=np.random.randn)
+M5 = np.squeeze(np.asarray(M5.todense()))
+np.savetxt("M5.txt", M5)
+
+# generate x0 for M5
+x0_m5 = np.round(np.random.randn(100),decimals = 3)
+np.savetxt("x0_m5.txt", x0_m5)
+print("[success] x0_m4 generated and saved.")

@@ -12,7 +12,7 @@
 
 # Imports
 import numpy as np
-
+from scipy.optimize import line_search
 
 class CGD:
 
@@ -74,7 +74,6 @@ class CGD:
             # calculate alpha.
             #alpha = 0.05
             alpha = self.exact_line_search(gfx,x)
-            
             # update iterates.
             x_new = x + alpha * p
             fx_new = self.func_(x_new)
@@ -88,6 +87,15 @@ class CGD:
             # calculate beta.
             if self.method == 'FR':
                 beta = np.dot(gf_new, gf_new) / np.dot(gfx, gfx)
+            elif self.method == 'PR':
+                y_hat = gf_new - gfx
+                beta = np.dot(gf_new, y_hat) / np.dot(gfx, gfx)
+            elif self.method == 'HS':
+                y_hat = gf_new - gfx
+                beta = np.dot(y_hat, gf_new) / np.dot(y_hat, p)
+            elif self.method == 'DY':
+                y_hat = gf_new - gfx
+                beta = np.dot(gf_new, gf_new) / np.dot(y_hat, p)
             else:
                 raise ValueError('Method not implemented')
             

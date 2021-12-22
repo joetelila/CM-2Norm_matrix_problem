@@ -13,10 +13,10 @@ class Funcs:
       '''
 
         Function to be minimized.
-        f(x) = (x^T M x) / x^T x , where M = A^T A
+        f(x) = ((x^T M x) / x^T x) , where M = A^T A
       
       '''
-      return np.matmul(np.matmul(np.transpose(x), self.M), x) / np.matmul(np.transpose(x), x)
+      return (-1 * np.matmul(np.matmul(np.transpose(x), self.M), x) / np.matmul(np.transpose(x), x))
 
   def func_grad_(self, x): # you can pass f(x) as a parameter. Later for optimization.
       '''
