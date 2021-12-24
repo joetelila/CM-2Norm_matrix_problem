@@ -10,7 +10,7 @@
 '''
 
 # Imports 
-import numpy as np
+import numpy as np 
 import math 
 from arnoldi_iteration import arnoldi_iteration,chope_lastrow,QR_algorithm ,func_
 
