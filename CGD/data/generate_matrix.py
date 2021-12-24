@@ -1,10 +1,8 @@
 import numpy as np
 from numpy import linalg as la
 from scipy import sparse
-<<<<<<< HEAD
-=======
-import numpy as np
->>>>>>> 5e774849f8282a686323c2d0b4ef6ad22240d646
+
+
 '''
 Authors: Dawit Anelay
          Marco Pitex
@@ -59,7 +57,7 @@ M3 = np.random.randn(100, 1000)
 np.savetxt("M3.txt", M3)
 print("[success] M3 generated and saved.")
 # generate x0 for M3
-x0_m3 = np.round(np.random.randn(1000),decimals = 3)
+x0_m3 = np.round(np.random.randn(1000),decimals = 3) 
 np.savetxt("x0_m3.txt", x0_m3)
 print("[success] x0_m3 generated and saved.") 
  
@@ -81,8 +79,6 @@ np.savetxt("M5.txt", M5)
 # generate x0 for M5
 x0_m5 = np.round(np.random.randn(100),decimals = 3)
 np.savetxt("x0_m5.txt", x0_m5)
-<<<<<<< HEAD
-print("[success] x0_m4 generated and saved.") 
-=======
-print("[success] x0_m4 generated and saved.")
->>>>>>> 5e774849f8282a686323c2d0b4ef6ad22240d646
+
+print("[success] x0_m5 generated and saved.")
+
