@@ -17,11 +17,9 @@ from arnoldi_iteration import arnoldi_iteration,chope_lastrow,QR_algorithm ,func
 epsilon = 1e-8 
 
 class arnoldi_norm:
-<<<<<<< HEAD
-     # Initialize the arnoldi_norm algorithm
-=======
+
      # Initialize the arnoldi algorithm
->>>>>>> 5e774849f8282a686323c2d0b4ef6ad22240d646
+
     def __init__(self, M,b,max_iter,verboose=False):  
         '''
         Parameters

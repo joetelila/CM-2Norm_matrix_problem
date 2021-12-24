@@ -76,9 +76,5 @@ M5 = sparse.random(1000, 100, density=0.3, data_rvs=np.random.randn)
 M5 = np.squeeze(np.asarray(M5.todense()))
 np.savetxt("M5.txt", M5)
 
-# generate x0 for M5
-x0_m5 = np.round(np.random.randn(100),decimals = 3)
-np.savetxt("x0_m5.txt", x0_m5)
-
 print("[success] x0_m5 generated and saved.")
 
