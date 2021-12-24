@@ -6,7 +6,7 @@ def arnoldi_iteration(A, b, n: int):
     """Computes an orthonormal basis Q for the Krylov space {b,Ab,A²b,...},
 
     Arguments
-      A: m × n array
+      A: m × m array
       b: initial vector (length m)
       n: dimension of Krylov subspace, must be >= 1
     
@@ -36,13 +36,16 @@ def func_(A):
   Given a matrix A compute product  A A^T 
 
     Arguments
-      H: m × n array
+      A: m × n array
     
     Returns
-      prodcut_of_matrix: where prodcut_of_matrix = A A^T  
+      prodcut_of_matrix: where prodcut_of_matrix = A A^T
   """
-  return np.dot(A, A.T)   
+  return np.dot(A,A.T)   
 
+def func_2(A):
+    return np.dot(A.T,A)
+  
 
 def chope_lastrow(H):
   """
@@ -78,7 +81,7 @@ def QR_algorithm(H):
             n -= 1
 
     λ[0] = H 
-    return λ
+    return λ 
 
 
 

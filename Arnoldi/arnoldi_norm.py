@@ -17,7 +17,7 @@ from arnoldi_iteration import arnoldi_iteration,chope_lastrow,QR_algorithm ,func
 epsilon = 1e-8 
 
 class arnoldi_norm:
-     # Initialize the CGD algorithm
+     # Initialize the arnoldi_norm algorithm
     def __init__(self, M,b,max_iter,verboose=False):  
         '''
         Parameters
@@ -41,15 +41,15 @@ class arnoldi_norm:
           # initialize the variables.
         M   = self.M
         b   = self.b 
-        prod = func_(M) 
+        #prod = func_(M) 
         max_iter = self.max_iter
         λ = [] 
-        H_1 = arnoldi_iteration(prod, b, 1)
+        H_1 = arnoldi_iteration(M, b, 1) 
         λ_1 = max(QR_algorithm(H_1)) 
         λ.append( λ_1)  
         
         for i in range(2,max_iter):
-          H_i = arnoldi_iteration(prod, b, i) 
+          H_i = arnoldi_iteration(M, b, i) 
           λ_i = max(QR_algorithm(H_i)) 
           λ.append(λ_i) 
           if (abs(λ[i-1] - λ[i-2]) < epsilon ):

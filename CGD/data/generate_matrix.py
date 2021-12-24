@@ -1,5 +1,6 @@
 import numpy as np
 from numpy import linalg as la
+from scipy import sparse
 '''
 Author: Bartolomeo Stellato
 Source: https://gist.github.com/bstellato/23322fe5d87bb71da922fbc41d658079
@@ -32,23 +33,27 @@ print("[success] x0_m1 generated and saved.")
 
 
 # Generate M2 matrix
-M2 = np.random.randn(10000, 100)
+M2 = np.random.randn(1000, 100)
 np.savetxt("M2.txt", M2)
 print("[success] M2 generated and saved.")
 # generate x0 for M2
 x0_m2 = np.round(np.random.randn(100),decimals = 3)
-np.savetxt("x0_m2.txt", x0_m2)
+np.savetxt("x0_m2.txt", x0_m2) 
 print("[success] x0_m2 generated and saved.")
+ 
+
+
 
 
 # Generate M3 matrix
-M3 = np.random.randn(100, 10000)
+M3 = np.random.randn(100, 1000) 
 np.savetxt("M3.txt", M3)
 print("[success] M3 generated and saved.")
 # generate x0 for M3
-x0_m2 = np.round(np.random.randn(10000),decimals = 3)
-np.savetxt("x0_m3.txt", x0_m2)
-print("[success] x0_m3 generated and saved.")
+x0_m3 = np.round(np.random.randn(1000),decimals = 3)
+np.savetxt("x0_m3.txt", x0_m3)
+print("[success] x0_m3 generated and saved.") 
+ 
 
 # Generate M4 matrix
 M4 = np.random.randn(100,100)
@@ -59,3 +64,12 @@ x0_m4 = np.round(np.random.randn(100),decimals = 3)
 np.savetxt("x0_m4.txt", x0_m4)
 print("[success] x0_m4 generated and saved.")
 
+# Generate M5 matrix
+M5 = sparse.random(1000, 100, density=0.3, data_rvs=np.random.randn)
+M5 = np.squeeze(np.asarray(M5.todense()))
+np.savetxt("M5.txt", M5)
+
+# generate x0 for M5
+x0_m5 = np.round(np.random.randn(100),decimals = 3)
+np.savetxt("x0_m5.txt", x0_m5)
+print("[success] x0_m4 generated and saved.") 
