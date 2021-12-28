@@ -76,6 +76,7 @@ def QR_algorithm(H):
         convergence_measure.append(np.abs(H[n, n - 1])) 
         
         if convergence_measure[-1] < QR_ALGORITHM_TOLERANCE:
+
             λ[n] = H[n, n]
             H = H[:n, :n]
             n -= 1
