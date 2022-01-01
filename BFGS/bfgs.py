@@ -19,7 +19,7 @@ from numpy import linalg as la
 class BFGS:
 
     # Initialize the BFGS algorithm
-    def __init__(self, func_, func_grad_, line_search, x0, H0, tol, max_iter, method, line_search_args = dict(), verboose=False):
+    def __init__(self, func_, func_grad_, line_search, x0, H0, tol, max_iter, method, line_search_args = dict(), verbose=False):
         '''
         Parameters
         ----------
@@ -51,7 +51,7 @@ class BFGS:
         self.max_iter = max_iter
         self.method = method
         self.line_search_args = line_search_args
-        self.verboose = verboose    
+        self.verbose = verbose    
 
     # BFGS algorithm
     def bfgs(self):
@@ -119,6 +119,10 @@ class BFGS:
             elif self.method == 'O' or (self.method == 'C' and ( np.dot(y.T, s) / np.linalg.norm(s)**2 ) > c_eps * ( np.linalg.norm(gfx)**c_alpha ) ):            
                 # performs update of the H matrix
                 ro = 1.0 / (np.dot(y, s))
+                # np.newaxis increases the dimension of the existing array by one more dimension
+                # if vector a is a simple vector [1, 2, 3,...]
+                # a[:, np.newaxis] is a column vector
+                # a[np.newaxis, :] is a row vector
                 A1 = I - ro * s[:, np.newaxis] * y[np.newaxis, :]
                 A2 = I - ro * y[:, np.newaxis] * s[np.newaxis, :]
                 H_new = np.dot(A1, np.dot(H, A2)) + (ro * s[:, np.newaxis] * s[np.newaxis, :])
@@ -137,10 +141,10 @@ class BFGS:
             num_iter += 1
             residuals.append(gfx_norm)
             errors.append(error)
-            if(self.verboose):
+            if(self.verbose):
                 print('Iteration {}: error = {:.4f}, residual = {}\n'.format(num_iter, error, gfx_norm))
         
-        if(self.verboose):    
+        if(self.verbose):    
             if num_iter == self.max_iter:
                 print('BFGS did not converge')
             else:
