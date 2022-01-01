@@ -7,33 +7,10 @@ from scipy import sparse
 Authors: Dawit Anelay
          Marco Pitex
          Yohannis Telila
-Credits:
-The code to generate the matrix with condition number is based on the code from
-Author: Bartolomeo Stellato
-Source: https://gist.github.com/bstellato/23322fe5d87bb71da922fbc41d658079
-
-# Construct random matrix P with specified condition number
-#  Bierlaire, M., Toint, P., and Tuyttens, D. (1991). 
-#  On iterative algorithms for linear ls problems with bound constraints. 
-#  Linear Algebra and Its Applications, 143, 111–143.
-
 '''
 
-# Generate M1 matrix
-cond_P = 1e-18     # Condition number
-log_cond_P = np.log(cond_P)
-n= 1000
-exp_vec = np.arange(-log_cond_P/4., log_cond_P * (n )/(4 * (n - 1)), log_cond_P/(2.*(n-1)))
-s = np.exp(exp_vec)
-S = np.diag(s)
-U, _ = la.qr((np.random.rand(n, n) - 5.) * 200)
-V, _ = la.qr((np.random.rand(n, n) - 5.) * 200)
-P = U.dot(S).dot(V.T)
-P = P.dot(P.T) / 1e7
-
-np.savetxt("M1.txt", P)
-print("[success] M1 generated and saved.")
 # generate x0_m1 matrix
+n= 1000
 x0_m1 = np.round(np.random.randn(n),decimals = 3)
 np.savetxt("x0_m1.txt", x0_m1)
 print("[success] x0_m1 generated and saved.")
