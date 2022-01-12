@@ -17,7 +17,7 @@ from scipy.optimize import line_search
 class CGD:
 
     # Initialize the CGD algorithm
-    def __init__(self, func_, func_grad_,exact_line_search, x0, tol, max_iter, method='FR', verboose=False):
+    def __init__(self,matrix_norm, func_, func_grad_,exact_line_search, x0, tol, max_iter, method='FR', verboose=False):
         '''
         Parameters
         ----------
@@ -35,6 +35,7 @@ class CGD:
           verbose : bool, optional, if True prints the progress of the algorithm.
 
         '''
+        self.matrix_norm = matrix_norm
         self.func_ = func_
         self.func_grad_ = func_grad_
         self.exact_line_search = exact_line_search
@@ -64,7 +65,9 @@ class CGD:
         num_iter = 0
         residuals = []
         errors = []
-
+        error = abs(np.sqrt(abs(fx)) - self.matrix_norm) / abs(self.matrix_norm)
+        errors.append(error)
+        residuals.append(gfx_norm)    
         #if(self.verboose):
         #    print('Initial condition: fx = {:.4f}, x = {} \n'.format(fx, x))
 
@@ -81,8 +84,8 @@ class CGD:
         
             gf_new = self.func_grad_(x_new)
              
-            # calculate error.
-            error = abs(fx_new - fx)
+            # calculate error. 
+            error = abs(np.sqrt(abs(fx_new)) - self.matrix_norm) / abs(self.matrix_norm)
 
             # calculate beta.
             if self.method == 'FR':
@@ -93,9 +96,6 @@ class CGD:
             elif self.method == 'HS':
                 y_hat = gf_new - gfx
                 beta = np.dot(y_hat, gf_new) / np.dot(y_hat, p)
-            elif self.method == 'DY':
-                y_hat = gf_new - gfx
-                beta = np.dot(gf_new, gf_new) / np.dot(y_hat, p)
             else:
                 raise ValueError('Method not implemented')
             
