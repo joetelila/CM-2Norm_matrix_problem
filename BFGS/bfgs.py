@@ -19,10 +19,11 @@ from numpy import linalg as la
 class BFGS:
 
     # Initialize the BFGS algorithm
-    def __init__(self, func_, func_grad_, line_search, x0, H0, tol, max_iter, method, line_search_args = dict(), verbose=False):
+    def __init__(self, matrix_norm, func_, func_grad_, line_search, x0, H0, tol, max_iter, method, line_search_args = dict(), verbose=False):
         '''
         Parameters
         ----------
+           matrix : ndarray, matrix needed to compute the error
             func_ : function, function to be minimized. 
                     f(x) = (x^T M x) / x^T x , where M = A^T A
         func_grad : function, Gradient of the function to be minimized. 
@@ -42,6 +43,7 @@ class BFGS:
           verbose : bool, optional, if True prints the progress of the algorithm.
 
         '''
+        self.matrix_norm = matrix_norm
         self.func_ = func_
         self.func_grad_ = func_grad_
         self.line_search = line_search
@@ -103,7 +105,8 @@ class BFGS:
             y = gfx_new - gfx
              
             # calculate error.
-            error = abs(fx_new - fx)
+            computed_norm = np.sqrt(-fx_new)
+            error = abs(computed_norm - self.matrix_norm)/self.matrix_norm # relative error
 
             # calculate c_alpha for cautious update
             if gfx_norm >= 1:
