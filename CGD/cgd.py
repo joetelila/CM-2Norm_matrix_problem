@@ -77,6 +77,9 @@ class CGD:
             # calculate alpha.
             #alpha = 0.05
             alpha = self.exact_line_search(gfx,x)
+            if alpha < 1e-16:
+                print('CGD did not converge')
+                break
             # update iterates.
             x_new = x + alpha * p
             fx_new = self.func_(x_new)
