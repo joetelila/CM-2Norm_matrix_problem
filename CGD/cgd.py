@@ -99,6 +99,9 @@ class CGD:
             elif self.method == 'HS':
                 y_hat = gf_new - gfx
                 beta = np.dot(y_hat, gf_new) / np.dot(y_hat, p)
+            elif self.method == 'DY':
+                y_hat = gf_new - gfx
+                beta = np.dot(gf_new, gf_new) / np.dot(y_hat, p)
             else:
                 raise ValueError('Method not implemented')
             
