@@ -31,7 +31,6 @@ Possible parameters for method parameter for beta
 FR for Fletcher-Reeves method
 PR for Polak–Ribière method
 HS for hessian-free method
-DY for Dykstra's method
 ```
 Finally start the algorithm
 ```python
