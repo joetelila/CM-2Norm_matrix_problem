@@ -120,7 +120,7 @@ class CGD:
                 print('Iteration {}: error = {:.4f}, residual = {}\n'.format(num_iter, error, gfx_norm))
             
         if num_iter == self.max_iter:
-            print(self.method,' :CGD did not converge')
+            print(self.method,':CGD did not converge')
 
         return residuals,errors, fx
 
