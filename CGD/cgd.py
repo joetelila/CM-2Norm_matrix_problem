@@ -92,16 +92,16 @@ class CGD:
 
             # calculate beta.
             if self.method == 'FR':
-                beta = np.dot(gf_new, gf_new) / np.dot(gfx, gfx)
+                beta = np.dot(gf_new.T, gf_new) / np.dot(gfx.T, gfx)
             elif self.method == 'PR':
                 y_hat = gf_new - gfx
-                beta = np.dot(gf_new, y_hat) / np.dot(gfx, gfx)
+                beta = np.dot(gf_new.T, y_hat) / np.dot(gfx.T, gfx)
             elif self.method == 'HS':
                 y_hat = gf_new - gfx
-                beta = np.dot(y_hat, gf_new) / np.dot(y_hat, p)
+                beta = np.dot(gf_new.T, y_hat) / np.dot(p.T, y_hat)
             elif self.method == 'DY':
                 y_hat = gf_new - gfx
-                beta = np.dot(gf_new, gf_new) / np.dot(y_hat, p)
+                beta = np.dot(gf_new.T, gf_new) / np.dot(y_hat.T, p)
             else:
                 raise ValueError('Method not implemented')
             
@@ -120,7 +120,7 @@ class CGD:
                 print('Iteration {}: error = {:.4f}, residual = {}\n'.format(num_iter, error, gfx_norm))
             
         if num_iter == self.max_iter:
-            print('CGD did not converge')
+            print(self.method,' :CGD did not converge')
 
         return residuals,errors, fx
 
